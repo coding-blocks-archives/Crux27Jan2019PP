@@ -16,7 +16,7 @@ public class VariableDemo {
 
 		int si = (p * r * t) / 100;
 
-		System.out.println("Simple Interset is " + si);
+		System.out.println("Simple Interest is " + si);
 
 	}
 
