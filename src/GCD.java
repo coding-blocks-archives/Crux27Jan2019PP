@@ -12,7 +12,19 @@ public class GCD {
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 
-		int n = s.nextInt();
+		int divident = s.nextInt();
+		int divisor = s.nextInt();
+
+		while (divident % divisor != 0) {
+
+			int rem = divident % divisor;
+
+			divident = divisor;
+			divisor = rem;
+
+		}
+
+		System.out.println(divisor);
 
 	}
 
