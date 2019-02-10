@@ -68,6 +68,30 @@ public class DataTypeDemo {
 
 		}
 
+		// Part 7
+		char ch = 'a';
+		System.out.println(ch);
+
+		System.out.println((int) ch);
+
+		// in = ch ;
+		// System.out.println(in);
+		//
+		// ch = (char) in ;
+
+		int ch1 = (ch + 't');
+
+		// Part 8
+		System.out.println(10 + 20 + "Hello" + 10 + 20);
+		System.out.println(2 + ' ' + 5);
+		System.out.println(2 + " " + 5);
+		System.out.println("Hello" + '\t' + "World" + '\n');
+		System.out.println("Hello" + "\t" + "World" + "\n");
+
 	}
 
 }
+
+
+
+
