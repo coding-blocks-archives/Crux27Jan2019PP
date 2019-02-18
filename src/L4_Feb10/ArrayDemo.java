@@ -62,6 +62,43 @@ public class ArrayDemo {
 
 		}
 
+		int i = 0, j = 2;
+
+		System.out.println(arr[i] + ", " + arr[j]);
+		Swap(arr[i], arr[j]);
+		System.out.println(arr[i] + ", " + arr[j]);
+
+		System.out.println(arr[i] + ", " + arr[j]);
+		Swap(arr, i, j);
+		System.out.println(arr[i] + ", " + arr[j]);
+
+		int[] other = { 100, 200, 300 };
+		System.out.println(arr[0] + ", " + other[0]);
+		Swap(arr, other);
+		System.out.println(arr[0] + ", " + other[0]);
+	}
+
+	public static void Swap(int[] one, int[] two) {
+		int[] temp = one;
+		one = two;
+		two = temp;
+
+	}
+
+	public static void Swap(int[] a, int i, int j) {
+		System.out.println(a[i] + ", " + a[j]);
+
+		int temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
+
+		System.out.println(a[i] + ", " + a[j]);
+	}
+
+	public static void Swap(int one, int two) {
+		int temp = one;
+		one = two;
+		two = temp;
 	}
 
 }
