@@ -16,8 +16,15 @@ public class ArrayOps {
 	public static void main(String[] args) {
 
 		// int[] array = takeInput();
-		int[] array = { 50, 30, 10, 25, 5 };
-		display(array);
+		int n = 100_000_0;
+
+		int[] array = new int[n];
+
+		for (int i = 0; i < array.length; i++) {
+			array[i] = i;
+		}
+
+		// display(array);
 
 		// System.out.println(max(array));
 		//
@@ -27,10 +34,17 @@ public class ArrayOps {
 		// rotate(array, -19);
 		// int[] ans = inverse(array);
 		// System.out.println(ans);
-		// bubbleSort(array);
+
+		long start = System.currentTimeMillis();
+
+		bubbleSort(array);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(end - start);
 		// selectionSort(array);
-		insertionSort(array);
-		display(array);
+		// insertionSort(array);
+		// display(array);
 	}
 
 	public static int[] takeInput() {
@@ -160,40 +174,57 @@ public class ArrayOps {
 
 	public static void bubbleSort(int[] arr) {
 
+		boolean flag = true;
+
 		for (int counter = 0; counter < arr.length - 1; counter++) {
 
-			System.out.println("Counter " + counter);
+			// System.out.println("Counter " + counter);
 			for (int j = 0; j < arr.length - counter - 1; j++) {
 
 				if (arr[j] > arr[j + 1]) {
 
+					flag = false;
 					int temp = arr[j];
 					arr[j] = arr[j + 1];
 					arr[j + 1] = temp;
 				}
 
-				display(arr);
+				// display(arr);
 			}
+
+			if (flag)
+				break;
 		}
 
 	}
 
 	public static void selectionSort(int[] arr) {
 
-		for (int counter = 0; counter < arr.length - 1; counter++) {
+		boolean flag = true;
 
-			int min = counter;
-
-			for (int j = counter + 1; j < arr.length; j++) {
-
-				if (arr[j] < arr[min]) {
-					min = j;
-				}
+		for (int i = 0; i < arr.length - 1; i++) {
+			if (arr[i] > arr[i + 1]) {
+				flag = false;
 			}
+		}
 
-			int temp = arr[min];
-			arr[min] = arr[counter];
-			arr[counter] = temp;
+		if (flag == false) {
+
+			for (int counter = 0; counter < arr.length - 1; counter++) {
+
+				int min = counter;
+
+				for (int j = counter + 1; j < arr.length; j++) {
+
+					if (arr[j] < arr[min]) {
+						min = j;
+					}
+				}
+
+				int temp = arr[min];
+				arr[min] = arr[counter];
+				arr[counter] = temp;
+			}
 		}
 
 	}
