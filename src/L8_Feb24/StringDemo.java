@@ -30,6 +30,7 @@ public class StringDemo {
 		System.out.println(str.substring(0, 4)); // hell
 		System.out.println(str.substring(0, 5)); // hello
 		System.out.println(str.substring(5, 5)); // ""
+		System.out.println(str.substring(2));
 
 		// concatenate
 		String s1 = "hello";
