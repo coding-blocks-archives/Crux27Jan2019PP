@@ -15,7 +15,10 @@ public class RecursionGet {
 
 		// System.out.println(getSSAscii("ab").size());
 		// System.out.println(getKPC("145"));
-		System.out.println(getBoardPath(0, 10));
+		// System.out.println(getBoardPath(0, 10));
+		// System.out.println(getCoinToss(3));
+//		System.out.println(getMazePath(0, 0, 2, 2));
+		System.out.println(getMazePathMM(0, 0, 2, 3).size());
 	}
 
 	public static ArrayList<String> getSS(String str) {
@@ -170,7 +173,7 @@ public class RecursionGet {
 
 		ArrayList<String> mr = new ArrayList<>();
 
-		for (int dice = 1; dice <= 6; dice++) {
+		for (int dice = 1; dice <= 6 && curr + dice <= end; dice++) {
 
 			ArrayList<String> rr = getBoardPath(curr + dice, end);
 
@@ -178,6 +181,89 @@ public class RecursionGet {
 				mr.add(dice + val);
 			}
 
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getCoinToss(int n) {
+
+		if (n == 0) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		ArrayList<String> rr = getCoinToss(n - 1);
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (String val : rr) {
+			mr.add("H" + val);
+			mr.add("T" + val);
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getMazePath(int cr, int cc, int er, int ec) {
+
+		if (cr == er && cc == ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		if (cr > er || cc > ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		ArrayList<String> rrh = getMazePath(cr, cc + 1, er, ec);
+
+		for (String val : rrh) {
+			mr.add("H" + val);
+		}
+
+		ArrayList<String> rrv = getMazePath(cr + 1, cc, er, ec);
+
+		for (String val : rrv) {
+			mr.add("V" + val);
+		}
+
+		return mr;
+
+	}
+
+	public static ArrayList<String> getMazePathMM(int cr, int cc, int er, int ec) {
+
+		if (cr == er && cc == ec) {
+			ArrayList<String> br = new ArrayList<>();
+			br.add("");
+			return br;
+		}
+
+		ArrayList<String> mr = new ArrayList<>();
+
+		for (int move = 1; move <= ec - cc; move++) {
+			ArrayList<String> rrh = getMazePathMM(cr, cc + move, er, ec);
+
+			for (String val : rrh) {
+				mr.add("H" + move + val);
+			}
+		}
+
+		for (int move = 1; move <= er - cr; move++) {
+
+			ArrayList<String> rrv = getMazePathMM(cr + move, cc, er, ec);
+
+			for (String val : rrv) {
+				mr.add("V" + move + val);
+			}
 		}
 
 		return mr;
