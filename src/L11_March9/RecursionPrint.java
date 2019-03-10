@@ -17,7 +17,14 @@ public class RecursionPrint {
 		// printKPC("145", "");
 		// printPermutation("abcd", "");
 		// coinToss(3, "");
-		validParenthesis(3, "", 0, 0);
+		// validParenthesis(3, "", 0, 0);
+
+		// System.out.println(mazePath(0, 0, 2, 2, ""));
+		// System.out.println(boardPath(0, 10, ""));
+
+		// lexicoCounting(1, 1000);
+		// coinTossNoConsecutiveHead(3, "");
+		coinTossNoConsecutiveHead2(3, "", true);
 	}
 
 	public static void printSS(String ques, String ans) {
@@ -115,6 +122,97 @@ public class RecursionPrint {
 		validParenthesis(n, ans + "(", open + 1, close);
 		validParenthesis(n, ans + ")", open, close + 1);
 
+	}
+
+	public static int boardPath(int curr, int end, String ans) {
+
+		if (curr == end) {
+			counter++;
+			System.out.println(counter + ". " + ans);
+			return 1;
+		}
+
+		if (curr > end) {
+			return 0;
+		}
+
+		int count = 0;
+
+		for (int dice = 1; dice <= 6; dice++) {
+			count += boardPath(curr + dice, end, ans + dice);
+		}
+
+		return count;
+
+	}
+
+	public static int mazePath(int cr, int cc, int er, int ec, String ans) {
+
+		if (cr == er && cc == ec) {
+			System.out.println(ans);
+			return 1;
+		}
+
+		if (cr > er || cc > ec) {
+			return 0;
+		}
+
+		int ch = mazePath(cr, cc + 1, er, ec, ans + "H");
+		int cv = mazePath(cr + 1, cc, er, ec, ans + "V");
+
+		return ch + cv;
+
+	}
+
+	public static void lexicoCounting(int curr, int end) {
+
+		if (curr > end) {
+			return;
+		}
+
+		System.out.println(curr);
+
+		int i = 0;
+
+		if (curr == 0) {
+			i = 1;
+		}
+
+		for (; i <= 9; i++) {
+			lexicoCounting(curr * 10 + i, end);
+		}
+
+	}
+
+	public static void coinTossNoConsecutiveHead(int n, String ans) {
+
+		if (n == 0) {
+			counter++;
+			System.out.println(counter + ". " + ans);
+			return;
+		}
+
+		if (ans.length() == 0 || ans.charAt(ans.length() - 1) != 'H') {
+			coinTossNoConsecutiveHead(n - 1, ans + "H");
+		}
+
+		coinTossNoConsecutiveHead(n - 1, ans + "T");
+	}
+
+	public static void coinTossNoConsecutiveHead2(int n, String ans, boolean wasLastHeadIncluded) {
+
+		if (n == 0) {
+			counter++;
+			System.out.println(counter + ". " + ans);
+			return;
+		}
+
+		if (wasLastHeadIncluded) {
+			coinTossNoConsecutiveHead2(n - 1, ans + "T", false);
+		} else {
+			coinTossNoConsecutiveHead2(n - 1, ans + "H", true);
+			coinTossNoConsecutiveHead2(n - 1, ans + "T", false);
+		}
 	}
 
 }
