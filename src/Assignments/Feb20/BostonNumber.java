@@ -74,7 +74,7 @@ public class BostonNumber {
 
 		}
 
-		if (factor == 0) {
+		if (factor == 2) {
 			return true;
 		} else {
 			return false;
