@@ -64,6 +64,8 @@ public class Client {
 
 		Student s20 = new Student("Mohit", 60);
 		s20.introduceYourself();
+		
+		System.out.println(s20);
 
 	}
 

@@ -19,14 +19,15 @@ public class Student {
 	}
 
 	public Student() {
-		
+
 	}
-	
+
 	public void introduceYourself() {
 		System.out.println(this.name + " is " + this.age + " years old.");
 	}
 
 	public void sayHi(String name) {
+
 		System.out.println(this.name + " says hi to " + name);
 	}
 

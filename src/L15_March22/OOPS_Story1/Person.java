@@ -15,6 +15,7 @@ public class Person {
 	public int getAge() {
 		return age;
 	}
+	
 	public void setAge(int age) throws Exception{
 		
 		if (age < 0) {
