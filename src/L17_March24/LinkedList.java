@@ -315,12 +315,158 @@ public class LinkedList {
 
 	}
 
-	// public void RDataRecursively() {
-	//
-	// }
-	//
-	// private void RDataRecursively(Node ...) {
-	//
-	// }
+	public void RDataRecursively() {
+		// RDataRecursively(this.head, this.head, 0);
+
+		HeapMover mover = new HeapMover();
+		mover.left = this.head;
+
+		RDataRecursively(mover, this.head, 0);
+
+	}
+
+	private Node RDataRecursively(Node left, Node right, int count) {
+
+		if (right == null) {
+			return left;
+		}
+
+		Node cl = RDataRecursively(left, right.next, count + 1);
+
+		if (count >= this.size / 2) {
+			int temp = cl.data;
+			cl.data = right.data;
+			right.data = temp;
+		}
+
+		return cl.next;
+
+	}
+
+	private class HeapMover {
+		Node left;
+	}
+
+	private void RDataRecursively(HeapMover mover, Node right, int count) {
+
+		if (right == null) {
+			return;
+		}
+
+		RDataRecursively(mover, right.next, count + 1);
+
+		if (count >= this.size / 2) {
+			int temp = mover.left.data;
+			mover.left.data = right.data;
+			right.data = temp;
+
+		}
+
+		mover.left = mover.left.next;
+
+	}
+
+	public void fold() {
+		fold(this.head, this.head, 0);
+	}
+
+	private Node fold(Node left, Node right, int count) {
+
+		if (right == null) {
+			return left;
+		}
+
+		Node cl = fold(left, right.next, count + 1);
+
+		if (count > this.size / 2) {
+			Node ahead = cl.next;
+			cl.next = right;
+			right.next = ahead;
+
+		}
+
+		if (count == this.size / 2) {
+			this.tail = right;
+			this.tail.next = null;
+		}
+
+		return right.next;
+
+	}
+
+	public int mid() {
+
+		Node slow = this.head;
+		Node fast = this.head;
+
+		while (fast.next != null && fast.next.next != null) {
+
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+
+		return slow.data;
+
+	}
+
+	public int midRec() {
+		return midRec(this.head, this.head);
+	}
+
+	private int midRec(Node slow, Node fast) {
+
+		if (fast.next == null || fast.next.next == null) {
+			return slow.data;
+		}
+
+		return midRec(slow.next, fast.next.next);
+
+	}
+
+	public int kthFromLast(int k) {
+
+		Node slow = this.head;
+		Node fast = this.head;
+
+		for (int i = 1; i <= k; i++) {
+			fast = fast.next;
+		}
+
+		while (fast != null) {
+			slow = slow.next;
+			fast = fast.next;
+		}
+
+		return slow.data;
+
+	}
+
+	public void kReverse(int k) throws Exception {
+
+		LinkedList prev = null;
+
+		while (this.size != 0) {
+
+			LinkedList curr = new LinkedList();
+
+			for (int i = 1; i <= k && this.size != 0; i++) {
+				curr.addFirst(this.removeFirst());
+			}
+
+			if (prev == null) {
+				prev = curr;
+			} else {
+				prev.tail.next = curr.head;
+				prev.tail = curr.tail;
+				prev.size += curr.size;
+			}
+
+		}
+
+		this.head = prev.head;
+		this.tail = prev.tail;
+		this.size = prev.size;
+
+	}
 
 }
