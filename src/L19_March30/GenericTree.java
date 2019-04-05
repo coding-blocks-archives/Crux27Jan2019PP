@@ -263,6 +263,8 @@ public class GenericTree {
 				queue.addLast(child);
 			}
 
+			System.out.println();
+
 		}
 
 		System.out.println();
@@ -270,18 +272,120 @@ public class GenericTree {
 
 	public void levelOrderLinewise() {
 
+		LinkedList<Node> primary = new LinkedList<>();
+		LinkedList<Node> helper = new LinkedList<>();
+
+		primary.addLast(this.root);
+
+		while (!primary.isEmpty()) {
+
+			Node rn = primary.removeFirst();
+
+			System.out.print(rn.data + " ");
+
+			for (Node child : rn.children) {
+				helper.addLast(child);
+			}
+
+			if (primary.isEmpty()) {
+
+				System.out.println();
+				primary = helper;
+				helper = new LinkedList<>();
+			}
+
+		}
+
 	}
 
 	public void levelOrderZZ() {
 
+		int count = 0;
+
+		LinkedList<Node> queue = new LinkedList<>();
+		LinkedList<Node> stack = new LinkedList<>();
+
+		queue.addLast(this.root);
+
+		while (!queue.isEmpty()) {
+
+			Node rn = queue.removeFirst();
+
+			System.out.print(rn.data + " ");
+
+			if (count % 2 == 0) {
+				for (Node child : rn.children) {
+					stack.addFirst(child);
+				}
+			} else {
+				for (int i = rn.children.size() - 1; i >= 0; i--) {
+					stack.addFirst(rn.children.get(i));
+				}
+			}
+
+			if (queue.isEmpty()) {
+				System.out.println();
+				queue = stack;
+				stack = new LinkedList<>();
+				count++;
+			}
+
+		}
+
+	}
+
+	private class HeapMover {
+
+		int size = 0;
+		int max = Integer.MIN_VALUE;
+		int ht = 0;
+		boolean find;
+
+		Node pred = null;
+		Node succ = null;
+
+	}
+
+	public void multiSolver(int item) {
+		HeapMover mover = new HeapMover();
+		multiSolver(this.root, mover, 0, item);
+
+		System.out.println("Size : " + mover.size);
+		System.out.println("Max : " + mover.max);
+		System.out.println("Ht : " + mover.ht);
+		System.out.println("Find : " + mover.find);
+		System.out.println("Pred :" + (mover.pred == null ? null : mover.pred.data));
+		System.out.println("succ : " + (mover.succ == null ? null : mover.succ.data));
+	}
+
+	private void multiSolver(Node node, HeapMover mover, int cl, int item) {
+
+		mover.size++;
+
+		if (node.data > mover.max) {
+			mover.max = node.data;
+		}
+
+		if (cl > mover.ht) {
+			mover.ht = cl;
+		}
+
+		if (mover.find == true && mover.succ == null) {
+			mover.succ = node;
+		}
+
+		if (node.data == item) {
+			mover.find = true;
+		}
+
+		if (mover.find == false) {
+			mover.pred = node;
+		}
+
+		for (Node child : node.children) {
+			multiSolver(child, mover, cl + 1, item);
+		}
+
 	}
 
 }
-
-
-
-
-
-
-
-

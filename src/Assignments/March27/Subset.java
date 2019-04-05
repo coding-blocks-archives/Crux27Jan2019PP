@@ -26,7 +26,8 @@ public class Subset {
 			return;
 		}
 		
+		subsetTarget(arr, vidx + 1, sum + arr[vidx], asf + arr[vidx] + " ", target);		
 		subsetTarget(arr, vidx + 1, sum, asf, target);// no
-		subsetTarget(arr, vidx + 1, sum + arr[vidx], asf + arr[vidx] + " ", target);
+		
 	}
 }
