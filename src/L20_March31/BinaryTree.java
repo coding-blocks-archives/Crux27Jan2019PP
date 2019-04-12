@@ -3,6 +3,8 @@ package L20_March31;
 import java.util.Scanner;
 import java.util.Stack;
 
+import L22_April6.BST;
+
 /**
  * @author Garima Chhikara
  * @email garima.chhikara@codingblocks.com
@@ -61,6 +63,40 @@ public class BinaryTree {
 
 		return nn;
 
+	}
+
+	public BinaryTree(int[] pre, int[] in) {
+		this.root = construct(pre, 0, pre.length - 1, in, 0, in.length - 1);
+	}
+
+	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
+
+		if (plo > phi || ilo > ihi) {
+			return null;
+		}
+
+		Node nn = new Node();
+		nn.data = pre[plo];
+
+		int si = -1;
+
+		for (int i = ilo; i <= ihi; i++) {
+			if (in[i] == pre[plo]) {
+				si = i;
+				break;
+			}
+
+		}
+
+		int nel = si - ilo;
+
+		nn.left = construct(pre, plo + 1, plo + nel, in, ilo, si - 1);
+		nn.right = construct(pre, plo + nel + 1, phi, in, si + 1, ihi);
+
+		// nn.left = construct(pre, plo, plo + nel-1, in, ilo, si - 1);
+		// nn.right = construct(pre, plo + nel, phi-1, in, si + 1, ihi);
+
+		return nn;
 	}
 
 	public void display() {
@@ -219,26 +255,187 @@ public class BinaryTree {
 
 	}
 
-	public int isBalanced() {
-		return isBalanced(this.root) ;
+	public boolean isBalanced() {
+		return isBalanced(this.root);
 	}
 
-	private void isBalanced(Node node) {
-		
-		
-		
+	private boolean isBalanced(Node node) {
+
+		if (node == null) {
+			return true;
+		}
+
+		boolean lb = isBalanced(node.left);
+		boolean rb = isBalanced(node.right);
+
+		int bf = ht(node.left) - ht(node.right);
+
+		if ((bf == -1 || bf == 0 || bf == 1) && lb && rb) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	private class BalPair {
+		boolean isBal = true;
+		int ht = -1;
+	}
+
+	public boolean isBalanced2() {
+		return isBalanced2(this.root).isBal;
+	}
+
+	private BalPair isBalanced2(Node node) {
+
+		if (node == null) {
+			return new BalPair();
+		}
+
+		BalPair lbp = isBalanced2(node.left);
+		BalPair rbp = isBalanced2(node.right);
+
+		BalPair sbp = new BalPair();
+
+		sbp.ht = Math.max(lbp.ht, rbp.ht) + 1;
+
+		boolean lb = lbp.isBal;
+		boolean rb = rbp.isBal;
+
+		int bf = lbp.ht - rbp.ht;
+
+		if ((bf == -1 || bf == 0 || bf == 1) && lb && rb) {
+			sbp.isBal = true;
+		} else {
+			sbp.isBal = false;
+		}
+
+		return sbp;
+
+	}
+
+	public void preorder() {
+		preorder(this.root);
+		System.out.println();
+	}
+
+	// NLR : Pre
+	// LNR : In
+	// LRN : Post
+	// NRL : Post Rev
+	// RNL : In Rev
+	// RLN : Pre Rev
+	private void preorder(Node node) {
+
+		if (node == null) {
+			return;
+		}
+
+		// N
+		System.out.print(node.data + " ");
+
+		// L
+		preorder(node.left);
+
+		// R
+		preorder(node.right);
+
+	}
+
+	private class Pair {
+
+		Node node;
+		boolean sd;
+		boolean ld;
+		boolean rd;
+
+	}
+
+	public void preorderI() {
+
+		if (this.root == null) {
+			return;
+		}
+
+		Stack<Pair> stack = new Stack<>();
+
+		Pair sp = new Pair();
+		sp.node = this.root;
+
+		stack.push(sp);
+
+		while (!stack.isEmpty()) {
+
+			Pair tp = stack.peek();
+
+			// if (tp.node == null) {
+			// stack.pop();
+			// continue;
+			// }
+
+			if (tp.sd == false) {
+				System.out.print(tp.node.data + " ");
+				tp.sd = true;
+			} else if (tp.ld == false) {
+
+				Pair np = new Pair();
+				np.node = tp.node.left;
+
+				if (np.node != null)
+					stack.push(np);
+
+				tp.ld = true;
+			} else if (tp.rd == false) {
+
+				Pair np = new Pair();
+				np.node = tp.node.right;
+
+				if (np.node != null)
+					stack.push(np);
+
+				tp.rd = true;
+			} else {
+				stack.pop();
+			}
+
+		}
+		System.out.println();
+
+	}
+
+	private class BSTPair {
+		boolean isBST = true;
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+	}
+
+	public boolean isTreeBST() {
+		return isTreeBST(this.root).isBST;
+	}
+
+	private BSTPair isTreeBST(Node node) {
+
+		if (node == null) {
+			return new BSTPair();
+		}
+
+		BSTPair lp = isTreeBST(node.left);
+		BSTPair rp = isTreeBST(node.right);
+
+		BSTPair sp = new BSTPair();
+
+		sp.max = Math.max(node.data, Math.max(lp.max, rp.max));
+		sp.min = Math.min(node.data, Math.min(lp.min, rp.min));
+
+		if (lp.isBST && rp.isBST && node.data > lp.max && node.data < rp.min) {
+			sp.isBST = true;
+		} else {
+			sp.isBST = false;
+		}
+
+		return sp;
+
+	}
+
 }
