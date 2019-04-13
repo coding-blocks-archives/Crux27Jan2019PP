@@ -1,6 +1,7 @@
 package L23_April7.GenericFxn;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * @author Garima Chhikara
@@ -29,10 +30,12 @@ public class GenericDemo {
 
 		display(cars);
 
-		bubbleSort(cars);
-		
+		bubbleSort(cars, new CarSpeedComparator());
 		display(cars);
-		
+		bubbleSort(cars, new CarPriceComparator());
+		display(cars);
+		bubbleSort(cars, new CarColorComparator());
+		display(cars);
 
 	}
 
@@ -64,4 +67,32 @@ public class GenericDemo {
 
 	}
 
+	public static <T> void bubbleSort(T[] arr, Comparator<T> comp) {
+
+		for (int counter = 0; counter < arr.length - 1; counter++) {
+
+			for (int j = 0; j < arr.length - counter - 1; j++) {
+
+				if (comp.compare(arr[j], arr[j + 1]) > 0) {
+
+					T temp = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = temp;
+				}
+
+			}
+
+		}
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

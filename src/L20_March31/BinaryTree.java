@@ -1,5 +1,9 @@
 package L20_March31;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -435,6 +439,65 @@ public class BinaryTree {
 		}
 
 		return sp;
+
+	}
+
+	private class VOPair implements Comparable<VOPair> {
+
+		int data;
+		int hl;
+
+		@Override
+		public String toString() {
+			return this.data + "";
+		}
+
+		@Override
+		public int compareTo(VOPair o) {
+			return this.hl - o.hl;
+		}
+
+	}
+
+	public void verticalOrder() {
+		HashMap<Integer, ArrayList<VOPair>> map = new HashMap<>();
+
+		verticalOrder(this.root, 0, 0, map);
+
+		ArrayList<Integer> keys = new ArrayList<>(map.keySet());
+
+		Collections.sort(keys);
+
+		for (int key : keys) {
+
+			ArrayList<VOPair> level = map.get(key);
+			Collections.sort(level);
+
+			System.out.println(key + "->" + level);
+
+		}
+
+		System.out.println(map);
+	}
+
+	private void verticalOrder(Node node, int vlevel, int hlevel, HashMap<Integer, ArrayList<VOPair>> map) {
+
+		if (node == null) {
+			return;
+		}
+
+		if (!map.containsKey(vlevel)) {
+			map.put(vlevel, new ArrayList<>());
+		}
+
+		VOPair np = new VOPair();
+		np.data = node.data;
+		np.hl = hlevel;
+
+		map.get(vlevel).add(np);
+
+		verticalOrder(node.left, vlevel - 1, hlevel + 1, map);
+		verticalOrder(node.right, vlevel + 1, hlevel + 1, map);
 
 	}
 

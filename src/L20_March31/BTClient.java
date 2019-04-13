@@ -19,8 +19,11 @@ public class BTClient {
 		// int[] post = { 40, 70, 50, 20, 60, 30, 10 };
 		// int[] in = { 40, 20, 50, 70, 10, 30, 60 };
 
-		int[] pre = { 80, 40, 20, 10, 25, 50, 100, 90, 150 };
-		int[] in = { 10, 20, 25, 40, 50, 80, 90, 100, 150 };
+		// vint[] pre = { 80, 40, 20, 10, 25, 50, 100, 90, 150 };
+		// int[] in = { 10, 20, 25, 40, 50, 80, 90, 100, 150 };
+
+		int[] pre = { 10, 20, 40, 80, 90, 120, 50, 100, 110, 30, 60, 70 };
+		int[] in = { 80, 40, 120, 90, 20, 50, 100, 110, 10, 60, 30, 70 };
 
 		BinaryTree bt = new BinaryTree(pre, in);
 		bt.display();
@@ -39,5 +42,7 @@ public class BTClient {
 		bt.preorderI();
 
 		System.out.println(bt.isTreeBST());
+		
+		bt.verticalOrder();
 	}
 }
